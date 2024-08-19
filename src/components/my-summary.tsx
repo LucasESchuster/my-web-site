@@ -1,52 +1,51 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { Badge } from "./ui/badge";
-import { cn } from "@/lib/utils";
+'use client'
+import React, { useState, useEffect } from 'react'
+import { Badge } from './ui/badge'
 
 // Define a interface para as propriedades do componente
 interface TimeSinceProps {
-  date: string;
+  date: string
 }
 
 interface TimeElapsed {
-  years: number;
-  months: number;
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
+  years: number
+  months: number
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
 }
 
 const TimeSince: React.FC<TimeSinceProps> = ({ date }) => {
   const calculateTimeElapsed = (): TimeElapsed => {
-    const now = new Date();
-    const then = new Date(date);
+    const now = new Date()
+    const then = new Date(date)
 
     // Calcula a diferença em milissegundos
-    const diffInMilliseconds = now.getTime() - then.getTime();
+    const diffInMilliseconds = now.getTime() - then.getTime()
 
     // Calcula a diferença em segundos
-    const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+    const diffInSeconds = Math.floor(diffInMilliseconds / 1000)
 
     // Calcula anos, meses e dias
-    const years = now.getFullYear() - then.getFullYear();
-    const months = now.getMonth() - then.getMonth();
+    const years = now.getFullYear() - then.getFullYear()
+    const months = now.getMonth() - then.getMonth()
     const daysInCurrentMonth = new Date(
       now.getFullYear(),
       now.getMonth() + 1,
-      0
-    ).getDate();
-    const days = now.getDate() - then.getDate();
+      0,
+    ).getDate()
+    const days = now.getDate() - then.getDate()
 
     // Ajusta para o caso onde o número de meses ou dias é negativo
-    const adjustedMonths = months < 0 ? months + 12 : months;
-    const adjustedYears = years - (months < 0 ? 1 : 0);
-    const adjustedDays = days < 0 ? days + daysInCurrentMonth : days;
+    const adjustedMonths = months < 0 ? months + 12 : months
+    const adjustedYears = years - (months < 0 ? 1 : 0)
+    const adjustedDays = days < 0 ? days + daysInCurrentMonth : days
 
     // Calcula horas, minutos e segundos
-    const seconds = diffInSeconds % 60;
-    const minutes = Math.floor((diffInSeconds % 3600) / 60);
-    const hours = Math.floor((diffInSeconds % 86400) / 3600);
+    const seconds = diffInSeconds % 60
+    const minutes = Math.floor((diffInSeconds % 3600) / 60)
+    const hours = Math.floor((diffInSeconds % 86400) / 3600)
 
     return {
       years: adjustedYears,
@@ -55,19 +54,19 @@ const TimeSince: React.FC<TimeSinceProps> = ({ date }) => {
       hours,
       minutes,
       seconds,
-    };
-  };
+    }
+  }
 
   const [timeElapsed, setTimeElapsed] =
-    useState<TimeElapsed>(calculateTimeElapsed);
+    useState<TimeElapsed>(calculateTimeElapsed)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeElapsed(calculateTimeElapsed());
-    }, 1000);
+      setTimeElapsed(calculateTimeElapsed())
+    }, 1000)
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => clearInterval(intervalId)
+  }, [])
 
   return (
     <div className="space-x-2">
@@ -108,16 +107,14 @@ const TimeSince: React.FC<TimeSinceProps> = ({ date }) => {
       )}
 
       <>
-        <Badge
-          
-        >
+        <Badge>
           {timeElapsed.seconds > 1
             ? `${timeElapsed.seconds} segundos`
             : `${timeElapsed.seconds} segundo`}
         </Badge>
       </>
     </div>
-  );
-};
+  )
+}
 
-export default TimeSince;
+export default TimeSince

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 
 import { Separator } from '@/components/ui/separator'
 
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { Github, Linkedin } from 'lucide-react'
 
 import Link from 'next/link'
 
